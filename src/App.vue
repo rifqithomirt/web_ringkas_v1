@@ -14,7 +14,7 @@
         </router-link>
         <!-- </div> -->
         <p class="nav-label">APPS</p>
-        <button>
+        <button v-on:click="collapse" value="no">
           <img src="./assets/img/icons/cart.svg" alt="cart" />
           <p>Sales</p>
           <svg
@@ -37,7 +37,7 @@
           <router-link to="/invoice">Invoice</router-link>
           <router-link to="/customer">Customer</router-link>
         </div>
-        <button>
+        <button v-on:click="collapse" value="no">
           <img src="./assets/img/icons/icon5.svg" alt="" />
           <p>Services & Product</p>
           <svg
@@ -60,7 +60,7 @@
           <router-link to="/category">Category</router-link>
           <router-link to="/inventory">Inventory</router-link>
         </div>
-        <button>
+        <button v-on:click="collapse" value="no">
           <img src="./assets/img/icons/icon2.svg" alt="" />
           <p>Purchase</p>
           <svg
@@ -83,7 +83,7 @@
           <router-link to="/bills">Bills</router-link>
           <router-link to="/vendors">Vendors</router-link>
         </div>
-        <button>
+        <button v-on:click="collapse" value="no">
           <img src="./assets/img/icons/icon1.svg" alt="" />
           <p>Transaction</p>
           <svg
@@ -106,7 +106,7 @@
           <router-link to="/coa">Chart of Account</router-link>
           <router-link to="/manualtransaction">Manual Transaction</router-link>
         </div>
-        <button>
+        <button v-on:click="collapse" value="no">
           <img src="./assets/img/icons/icon4.svg" alt="" />
           <p>Report</p>
           <svg
@@ -129,9 +129,13 @@
           <router-link to="/neraca">Neraca</router-link>
           <router-link to="/untungrugi">Untung Rugi</router-link>
         </div>
-        <button>
-          <img src="./assets/img/icons/icon3.svg" alt="" />
-          <p>POS</p>
+        <router-link to="/" class="link-home">
+          <img
+            src="./assets/img/icons/icon3.svg"
+            alt=""
+            style="filter: invert(0)"
+          />
+          POS
           <svg
             width="7"
             height="13"
@@ -147,7 +151,7 @@
               stroke-linejoin="round"
             />
           </svg>
-        </button>
+        </router-link>
       </div>
     </div>
     <div class="container-content">
@@ -163,6 +167,31 @@
 <script>
 export default {
   name: "Nav",
+  methods: {
+    collapse: function (e) {
+      const link = document.querySelectorAll(".link");
+      const arrow = Object.values(
+        document.querySelectorAll(".nav-links button svg")
+      );
+      const button = Object.values(
+        document.querySelectorAll(".nav-links button")
+      );
+      return button.map((el, index) =>
+        el.textContent === e.target.textContent && el.value === "no"
+          ? (link[index].classList.add("show"),
+            (arrow[index].style.transform = "rotate(90deg)"),
+            (el.value = "yes"))
+          : (link[index].classList.remove("show"),
+            (arrow[index].style.transform = "rotate(0deg)"),
+            (el.value = "no"))
+      );
+    },
+  },
+  data() {
+    return {
+      btn_id: 0,
+    };
+  },
 };
 </script>
 
@@ -191,6 +220,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 240px;
 }
 
 .container-content {
@@ -223,6 +253,13 @@ body {
   width: 100%;
 }
 
+.show {
+  /* display: flex !important; */
+  /* transition: all 0.5s ease; */
+  height: 10% !important;
+  opacity: 1 !important;
+}
+
 .nav-links button {
   position: relative;
   background: white;
@@ -249,11 +286,18 @@ body {
   left: 15%;
   margin: 0;
   align-self: flex-start;
+  pointer-events: none;
+}
+
+.nav-links button img {
+  pointer-events: none;
 }
 
 .nav-links button svg {
+  pointer-events: none;
   position: absolute;
   right: 0;
+  transition: all 0.5s ease;
 }
 
 .nav-label {
@@ -269,6 +313,11 @@ body {
   flex-direction: column;
   align-items: flex-start;
   transform: translate(30px);
+  /* transition: all 0.5s ease; */
+  transition: all 0.5s ease;
+  /* transition: opacity 0.2s ease; */
+  height: 0%;
+  opacity: 0;
 }
 
 .link a {
@@ -296,12 +345,13 @@ body {
 
 .link-home {
   box-sizing: border-box;
+  position: relative;
   display: flex;
   width: 203px;
   align-items: center;
   border-radius: 4px;
   align-self: center;
-  padding-left: 5%;
+  padding-left: 4%;
   line-height: 40px;
   text-decoration: none;
   font-size: 15px;
@@ -310,10 +360,16 @@ body {
 }
 
 .link-home img {
-  margin-right: 7px;
+  margin-right: 12px;
 }
 
 .link-home img {
   filter: invert(1);
+}
+
+.link-home svg {
+  pointer-events: none;
+  position: absolute;
+  right: 11px;
 }
 </style>
