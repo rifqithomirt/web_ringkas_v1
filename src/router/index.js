@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Invoice from '../views/Invoice.vue'
+//import Invoice from '../views/Invoice.vue'
 import Customer from '../views/Customer.vue'
 import Category from '../views/Category.vue'
 import Inventory from '../views/Inventory.vue'
@@ -11,6 +11,7 @@ import COA from '../views/COA.vue'
 import ManualTransaction from '../views/ManualTransaction.vue'
 import Neraca from '../views/Neraca.vue'
 import UntungRugi from '../views/UntungRugi.vue'
+import Create from '../views/Create.vue'
 
 Vue.use(VueRouter)
 
@@ -20,11 +21,16 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  {
-    path: '/invoice',
-    name: 'Invoice',
-    component: Invoice
-  },
+  // {
+  //   path: '/invoice',
+  //   name: 'Invoice',
+  //   component: Invoice
+  // },
+   {
+     path: '/invoice',
+     name: 'Create',
+     component: Create
+   },
   {
     path: '/customer',
     name: 'Customer',
