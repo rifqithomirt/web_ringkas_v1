@@ -218,7 +218,7 @@ body {
   flex-basis: 16.67%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   max-width: 240px;
 }

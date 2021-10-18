@@ -1,6 +1,17 @@
 <template>
   <div class="container-home container">
-    <p1>Home</p1>
+    <div>
+      <b-row>
+        <b-card>
+          <b-row>
+            <b-col>
+              Today's Money
+            </b-col>
+          </b-row>
+
+        </b-card>
+      </b-row>
+    </div>
     <div class="btn btn-primary">
       Home  
     </div>
