@@ -6,16 +6,10 @@
         header-tag="header"
         tag="article"
         style="max-width: 100%"
-        class="mb-2"
+        class="shadow-sm mb-2"
         id="test"
       >
-        <b-row
-          style="
-            padding-top: 37px;
-            padding-left: 99px;
-            padding-right: 99px;
-            padding-bottom: 46px;
-          "
+        <b-row class="px-2 py-2"
         >
           <b-col>
             <img
@@ -52,17 +46,19 @@
     </div>
 
     <div>
-      <b-card tag="article" style="max-width: 100%" class="mb-2">
-        <h6>Customer</h6>
-        <b-row
-          style="
-            padding-top: 37px;
-            padding-left: 599px;
-            padding-right: 99px;
-            padding-bottom: 46px;
-          "
-        >
-          <b-col>
+      <b-card tag="article" style="max-width: 100%" class="shadow-sm px-3 mb-2">
+        <b-row class="pt-2">
+        <b-col cols="2">
+          <b-row>
+              <b-col align-self="start">Select Customer</b-col>
+          </b-row>
+          <b-row>
+            <b-col>
+                <b-form-select class="form-select" v-model="selected" :options="options"></b-form-select>
+              </b-col>
+          </b-row>
+        </b-col>
+          <b-col offset-md="3" cols="7">
             <b-row>
               <b-col align-self="start">Invoice Number</b-col>
               <b-col>
@@ -105,53 +101,57 @@
         </b-row>
 
         
-          <b-row>
-              <b-col>
-                <b-col>Item name</b-col>
+          <b-row class="pt-5 pb-2">
+              <b-col cols="4" class="text-center">
+                Item name
               </b-col>
-              <b-col>
-                <b-col>Quantity</b-col>
+              <b-col class="text-center">
+                Quantity
               </b-col>
-              <b-col>
-                <b-col>Price</b-col>
+              <b-col class="text-center">
+                Price
               </b-col>
-              <b-col>
-                <b-col>Amount</b-col>
+              <b-col class="text-center">
+                Amount
+              </b-col>
+              <b-col class="text-center" cols="1">
+                ...
               </b-col>
           </b-row>
 
-          <b-row>
-            <b-col>
-              <div>
-                <b-form-select
-                  v-model="selected"
-                  :options="options"
-                ></b-form-select>
-              </div>
+          <b-row  v-for="(item, index) in items" :key="item.id">
+            <b-col cols="4">
+               <b-form-select class="form-select" v-model="item.name" :options="options"></b-form-select>
             </b-col>
             <b-col>
               <b-form-input
-                v-model="quantity"
+                v-model="item.qty"
                 type="number"
               ></b-form-input>
             </b-col>
             <b-col>
               <b-form-input
-                v-model="price"
+                v-model="item.price"
                 type="number"
               ></b-form-input>
             </b-col>
-            <b-col>
-              <p>$ {{ price * quantity }}</p>
+            <b-col >
+              <p class="align-right">$ {{ item.price * item.qty }}</p>
+            </b-col>
+            <b-col cols="1" class="text-center mx-0">
+              <a @click="removeitem(index)"><b-icon class="btn" icon="trash" style="color: #7952b3;" ></b-icon></a>
             </b-col>
           </b-row>
 
-          <b-row class="text-sm-center">
-            <b-col><b-button variant="outline-dark">Add Item</b-button></b-col>
+          <b-row class="text-sm-center pt-2">
+            <b-col cols="12">
+              <div @click="additem()" class="btn btn-outline-secondary" style="width:100%;">Add Item</div>
+            </b-col>
+            
           </b-row>
           
           <b-row>
-            <p class="align-right">Total: {{ price * quantity }}</p>
+            <p class="align-right">Total: {{ items.reduce((old, obj) =>{ old += (obj.price * obj.qty); return old; },0) }}</p>
           </b-row>
 
         <h6>Notes / Terms</h6>
@@ -172,6 +172,7 @@
 </template>
 
 <script>
+
 export default {
   name: "invoice",
   data() {
@@ -184,12 +185,29 @@ export default {
       ],
       price: "",
       quantity: "",
+      items:[{
+            name: "",
+            qty: 0,
+            price: 0,
+            totalprice: 0
+        }]
     };
   },
   methods: {
     amount() {
       console.log("price");
     },
+    additem(){
+          this.items.push({
+            name: "",
+            qty: 0,
+            price: 0,
+            totalprice: 0
+        });
+      },
+      removeitem(index){
+          this.items.splice(index, 1)
+      },
   },
 };
 </script>

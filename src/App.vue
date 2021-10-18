@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div id="nav" class="shadow-sm">
       <div class="logo-head">
         <img alt="Ringkas" src="./assets/logo.png" />
         <p>RINGKAS</p>
@@ -154,7 +154,7 @@
         </router-link>
       </div>
     </div>
-    <div class="container-content">
+    <div class="container container-content">
       <div class="header">
         <p>search</p>
       </div>
